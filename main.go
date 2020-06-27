@@ -57,7 +57,7 @@ func main() {
 
 	var w = os.Stdout
 	if output != "-" {
-		w, err = os.OpenFile(output, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, os.ModePerm)
+		w, err = os.OpenFile(output, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0664)
 		if err != nil {
 			log.Fatalln("Failed to open file to write to:", err)
 		}
