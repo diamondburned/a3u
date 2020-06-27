@@ -60,10 +60,11 @@ func main() {
 	if err != nil {
 		log.Fatalln("Failed to open file:", err)
 	}
-	f.Close()
 
 	name, tracks := convert(f)
 	p := m3u.Playlist(tracks)
+
+	f.Close()
 
 	var w = os.Stdout
 	if output != "-" && output != "" {
