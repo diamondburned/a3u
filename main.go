@@ -70,7 +70,7 @@ func main() {
 	if output != "-" && output != "" {
 		// Is the output is a directory, then use the playlist name instead.
 		if isdir(output) {
-			output = filepath.Join(output, slashesc(name))
+			output = filepath.Join(output, slashesc(name)+".m3u")
 		}
 
 		w, err = os.OpenFile(output, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0664)
