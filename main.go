@@ -3,10 +3,12 @@ package main
 import (
 	"io"
 	"log"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/diamondburned/audpl"
 	"github.com/spf13/pflag"
@@ -21,11 +23,12 @@ func init() {
 var slashesc = strings.NewReplacer("/", "∕", `\`, "⧵").Replace
 
 var (
-	trim   string
-	prefix string
-	output string = "-" // stdout default
-	extens string
-	simple bool
+	trim      string
+	prefix    string
+	output    string = "-" // stdout default
+	extens    string
+	simple    bool
+	urlEncode bool
 )
 
 func init() {
@@ -49,6 +52,7 @@ func main() {
 	pflag.StringVarP(&output, "output", "o", output, "Path to write to, - for stdout")
 	pflag.StringVarP(&extens, "extension", "e", extens, "Extension to override in filename")
 	pflag.BoolVarP(&simple, "simple", "s", simple, "Output simple M3U format")
+	pflag.BoolVarP(&urlEncode, "url-encode", "u", urlEncode, "Encode path as URL")
 	pflag.Parse()
 
 	if len(pflag.Args()) != 1 {
@@ -90,6 +94,14 @@ func main() {
 	}
 }
 
+func urlEscapePath(path string) string {
+	var parts = strings.Split(path, "/")
+	for i, part := range parts {
+		parts[i] = url.PathEscape(part)
+	}
+	return strings.Join(parts, "/")
+}
+
 func convert(r io.Reader) (string, []m3u.Track) {
 	p, err := audpl.Parse(r)
 	if err != nil {
@@ -105,6 +117,15 @@ func convert(r io.Reader) (string, []m3u.Track) {
 		}
 
 		var path = prefix + strings.TrimPrefix(track.URI, trim)
+		if urlEncode {
+			u, err := url.Parse(path)
+			if err != nil {
+				path = urlEscapePath(path)
+			} else {
+				u.Path = urlEscapePath(u.Path)
+				path = u.String()
+			}
+		}
 		if extens != "" {
 			path = convertExt(path, extens)
 		}
@@ -112,7 +133,8 @@ func convert(r io.Reader) (string, []m3u.Track) {
 		tracks = append(tracks, m3u.Track{
 			Path:  path,
 			Title: track.Title,
-			Time:  l,
+			// m3u duration is in seconds; audpl is in milliseconds.
+			Time: l / int64(time.Second/time.Millisecond),
 		})
 	}
 
