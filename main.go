@@ -116,16 +116,15 @@ func convert(r io.Reader) (string, []m3u.Track) {
 			continue
 		}
 
-		var path = prefix + strings.TrimPrefix(track.URI, trim)
-		if urlEncode {
-			u, err := url.Parse(path)
-			if err != nil {
-				path = urlEscapePath(path)
-			} else {
-				u.Path = urlEscapePath(u.Path)
-				path = u.String()
-			}
+		var path string
+		if !urlEncode {
+			path = track.URI.Path
+		} else {
+			path = track.URI.String()
 		}
+
+		path = prefix + strings.TrimPrefix(path, trim)
+
 		if extens != "" {
 			path = convertExt(path, extens)
 		}
