@@ -108,11 +108,6 @@ func convert(r io.Reader) (string, []m3u.Track) {
 		log.Fatalln("Failed to parse:", err)
 	}
 
-	name, err := url.PathUnescape(p.Name)
-	if err != nil {
-		name = p.Name
-	}
-
 	var tracks = make([]m3u.Track, 0, len(p.Tracks))
 	for _, track := range p.Tracks {
 		l, err := strconv.ParseInt(track.Length, 10, 64)
@@ -142,7 +137,7 @@ func convert(r io.Reader) (string, []m3u.Track) {
 		})
 	}
 
-	return name, tracks
+	return p.Name, tracks
 }
 
 func convertExt(file string, ext string) string {

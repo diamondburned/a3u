@@ -2,6 +2,8 @@ github.com/diamondburned/audpl v0.0.0-20200626211044-4652cd67fe80 h1:ljPheLa250k
 github.com/diamondburned/audpl v0.0.0-20200626211044-4652cd67fe80/go.mod h1:KT42fQJB9VDjTgtvToaw3znWShn7nS3aJ6n0QmCx1Bg=
 github.com/diamondburned/audpl v0.0.0-20201210005816-bb8b96e4aaac h1:/oA9n3fJ6uJO+vza2vnjCWCdjPnEjEXZ4kdf9Xsyfmk=
 github.com/diamondburned/audpl v0.0.0-20201210005816-bb8b96e4aaac/go.mod h1:KT42fQJB9VDjTgtvToaw3znWShn7nS3aJ6n0QmCx1Bg=
+github.com/diamondburned/audpl v0.0.0-20201215194514-856af05e07cf h1:t5ZFsi+PLv85aK3t+GzO7DNtTL99Uv0QK1FZkSlsALk=
+github.com/diamondburned/audpl v0.0.0-20201215194514-856af05e07cf/go.mod h1:KT42fQJB9VDjTgtvToaw3znWShn7nS3aJ6n0QmCx1Bg=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
